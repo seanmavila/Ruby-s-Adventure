@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public int maxHealth = 5;
     public float iFrameTime = 2.0f;
     public GameObject projectilePrefab;
+    public ParticleSystem hitEffect;
 
     private int currentHealth;
     public int health
@@ -92,6 +93,7 @@ public class PlayerController : MonoBehaviour
             isInvincible = true;
             iFrameTimer = iFrameTime;
             animator.SetTrigger("Hit");
+            hitEffect.Play();
         }
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log(currentHealth + "/" + maxHealth);

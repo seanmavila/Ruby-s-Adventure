@@ -6,6 +6,8 @@ public class EnemyController : MonoBehaviour
 {
     public bool vertical;
     public float changeTime = 3.0f;
+    public ParticleSystem smokeEffect;
+    public ParticleSystem hitEffect;
 
     [SerializeField] float speed;
     Rigidbody2D enemyRb;
@@ -82,5 +84,7 @@ public class EnemyController : MonoBehaviour
         broken = false;
         enemyRb.simulated = false;
         animator.SetTrigger("Fixed");
+        smokeEffect.Stop();
+        hitEffect.Play();
     }
 }
