@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 3.0f;
     private Rigidbody2D playerRb;
     private Vector2 position;
+    private Vector2 lookDir = new Vector2(1, 0);
+    private Animator animator;
     private float horizontalMove;
     private float verticalMove;
 
@@ -39,6 +41,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         currentHealth = maxHealth;
     }
 
@@ -58,9 +61,20 @@ public class PlayerController : MonoBehaviour
 
     public void playerMovement()
     {
+        Vector2 move = new Vector2(horizontalMove, verticalMove);
+
+        if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
+        {
+            lookDir.Set(move.x, move.y);
+            lookDir.Normalize();
+        }
+
+        animator.SetFloat("Look X", lookDir.x);
+        animator.SetFloat("Look Y", lookDir.y);
+        animator.SetFloat("Speed", move.magnitude);
+
         position = playerRb.position;
-        position.x += speed * horizontalMove * Time.deltaTime;
-        position.y += speed * verticalMove * Time.deltaTime;
+        position = position + move * speed * Time.deltaTime;
         playerRb.MovePosition(position);
     }
 
@@ -71,6 +85,7 @@ public class PlayerController : MonoBehaviour
             if (isInvincible) return;
             isInvincible = true;
             iFrameTimer = iFrameTime;
+            animator.SetTrigger("Hit");
         }
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log(currentHealth + "/" + maxHealth);
