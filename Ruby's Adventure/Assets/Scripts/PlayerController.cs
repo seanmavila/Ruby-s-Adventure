@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public int maxHealth = 5;
     public float iFrameTime = 2.0f;
+    public GameObject projectilePrefab;
 
     private int currentHealth;
     public int health
@@ -51,6 +52,11 @@ public class PlayerController : MonoBehaviour
         verticalMove = Input.GetAxis("Vertical");
 
         iFrameCheck();
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Launch();
+        }
     }
 
     // Update is called once per frame
@@ -101,5 +107,15 @@ public class PlayerController : MonoBehaviour
                 isInvincible = false;
             }
         }
+    }
+
+    private void Launch()
+    {
+        GameObject projectileObject = Instantiate(projectilePrefab, playerRb.position + Vector2.up * 0.5f, Quaternion.identity);
+
+        Projectile projectile = projectileObject.GetComponent<Projectile>();
+        projectile.Launch(lookDir, 300);
+
+        animator.SetTrigger("Launch");
     }
 }
