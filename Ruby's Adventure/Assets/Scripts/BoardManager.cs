@@ -96,7 +96,7 @@ public class BoardManager : MonoBehaviour
         InitializeList();
         LayoutObjectAtRandom(obstacleTiles, obstacleCount.minimum + 3 * level, obstacleCount.maximum + 3 * level);
         LayoutObjectAtRandom(foodTiles, foodCount.minimum + 3 * level, foodCount.maximum + 3 * level);
-        int enemyCount = level;
+        int enemyCount = level + 2;
         LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
         Instantiate(exit, new Vector3(columns - 1, rows - 1, 0f), Quaternion.identity);
     }

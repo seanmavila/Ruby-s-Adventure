@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -16,9 +17,10 @@ public class EnemyController : MonoBehaviour
     float timer;
     int direction = 1;
     bool broken = true;
-    int aggroRange = 2;
+    int aggroRange = 3;
     bool isAggro = false;
     private Vector2 movement;
+    private Text scoreText;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,7 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         timer = changeTime;
+        scoreText = GameObject.Find("Score Text").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -91,13 +94,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
 
         if (player != null)
         {
-            player.ChangeHealth(-100);
+            player.ChangeHealth(-50);
         }
         else
         {
@@ -114,5 +117,6 @@ public class EnemyController : MonoBehaviour
         animator.SetTrigger("Fixed");
         smokeEffect.Stop();
         hitEffect.Play();
+        scoreText.text = $"{ GameManager.instance.score += 25}";
     }
 }

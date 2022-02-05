@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public int maxHealth = 5;
+    public int currentAmmo = 10;
     public float iFrameTime = 2.0f;
     public GameObject projectilePrefab;
     public ParticleSystem hitEffect;
@@ -32,6 +34,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public int ammo
+    {
+        get { return currentAmmo; }
+        set
+        {
+            if (currentAmmo < 0)
+            {
+                currentAmmo = 0;
+                Debug.LogError("Ammo cannot be negative!");
+            }
+        }
+    }
+
     [SerializeField] float speed = 3.0f;
     Rigidbody2D playerRb;
     Vector2 position;
@@ -45,6 +60,8 @@ public class PlayerController : MonoBehaviour
     bool isMoving = false;
     int currentHealth;
     bool energyJustConsumed;
+    Text ammoText;
+
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +69,9 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        ammoText = GameObject.Find("Ammo Text").GetComponent<Text>();
         currentHealth = maxHealth;
+        
     }
 
     void Update()
@@ -68,7 +87,6 @@ public class PlayerController : MonoBehaviour
         }
 
         CheckNPC();
-        ConsumeEnergy();
     }
 
     // Update is called once per frame
@@ -120,6 +138,12 @@ public class PlayerController : MonoBehaviour
         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
     }
 
+    public void ChangeAmmo(int amount)
+    {
+        currentAmmo += amount;
+        ammoText.text = $"{currentAmmo}";
+    }
+
     public void iFrameCheck()
     {
         if (isInvincible)
@@ -134,13 +158,18 @@ public class PlayerController : MonoBehaviour
 
     private void Launch()
     {
-        GameObject projectileObject = Instantiate(projectilePrefab, playerRb.position + Vector2.up * 0.5f, Quaternion.identity);
+        
+        if (currentAmmo > 0)
+        {
+            GameObject projectileObject = Instantiate(projectilePrefab, playerRb.position + Vector2.up * 0.5f, Quaternion.identity);
 
-        Projectile projectile = projectileObject.GetComponent<Projectile>();
-        projectile.Launch(lookDir, 300);
+            Projectile projectile = projectileObject.GetComponent<Projectile>();
+            projectile.Launch(lookDir, 300);
+            animator.SetTrigger("Launch");
+            PlaySound(projectileClip);
 
-        animator.SetTrigger("Launch");
-        PlaySound(projectileClip);
+            ChangeAmmo(-1);
+        }
     }
 
     public void CheckNPC()
@@ -164,21 +193,6 @@ public class PlayerController : MonoBehaviour
         audioSource.PlayOneShot(clip);
     }
 
-    public void ConsumeEnergy()
-    {
-        if (isMoving && energyJustConsumed)
-        {
-            energyJustConsumed = !energyJustConsumed;
-            int amount = -1;
-            currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-            UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
-
-        }
-        else
-        {
-            energyJustConsumed = !energyJustConsumed;
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

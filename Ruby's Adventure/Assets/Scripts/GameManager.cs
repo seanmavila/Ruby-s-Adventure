@@ -7,10 +7,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public float levelStartDelay = 2f;
+    public int score = 0;
     public static GameManager instance = null;
     public BoardManager boardScript;
 
-    private int level = 1;
+    private int level = 100;
     private List<EnemyController> enemies;
     private bool doingSetup;
 
