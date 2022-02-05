@@ -53,6 +53,7 @@ public class EnemyController : MonoBehaviour
     public void enemyMove()
     {
         Vector2 position = enemyRb.position;
+        
 
         if (vertical)
         {
@@ -71,11 +72,12 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log(collision.gameObject.name);
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
 
         if (player != null)
         {
-            player.ChangeHealth(-1);
+            player.ChangeHealth(-100);
         }
     }
     

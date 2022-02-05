@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem hitEffect;
     public AudioClip projectileClip;
     public AudioClip hitClip;
+    public float restartLevelDelay = 1f;
 
     int currentHealth;
     public int health
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
     float horizontalMove;
     float verticalMove;
     AudioSource audioSource;
+    bool isMoving = false;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +66,7 @@ public class PlayerController : MonoBehaviour
         }
 
         CheckNPC();
+        ConsumeEnergy();
     }
 
     // Update is called once per frame
@@ -74,6 +78,15 @@ public class PlayerController : MonoBehaviour
     public void playerMovement()
     {
         Vector2 move = new Vector2(horizontalMove, verticalMove);
+
+        if (horizontalMove != 0 || verticalMove != 0)
+        {
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
 
         if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
         {
@@ -147,5 +160,34 @@ public class PlayerController : MonoBehaviour
     public void PlaySound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
+    }
+
+    public void ConsumeEnergy()
+    {
+        if (isMoving)
+        {
+            StartCoroutine(EnergyTime());
+            int amount = -1;
+            currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+            UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
+        }
+    }
+
+    IEnumerator EnergyTime()
+    {
+        yield return new WaitForSeconds(1);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Exit")
+        {
+            Invoke("Restart", restartLevelDelay);
+        }
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(0);
     }
 }
