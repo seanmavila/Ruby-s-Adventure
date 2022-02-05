@@ -1,4 +1,3 @@
 # Auto detect text files and perform LF normalization
 * ShaderLab linguist-detectable=false
-* text=auto
-
+* csharp linguist-detectable=true
