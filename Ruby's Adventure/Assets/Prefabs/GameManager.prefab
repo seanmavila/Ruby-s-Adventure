@@ -45,7 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelStartDelay: 2
+  score: 0
   boardScript: {fileID: 0}
+  playerHealth: 100
+  playerAmmo: 10
+  playerScore: 0
 --- !u!114 &4188891953574997432
 MonoBehaviour:
   m_ObjectHideFlags: 0

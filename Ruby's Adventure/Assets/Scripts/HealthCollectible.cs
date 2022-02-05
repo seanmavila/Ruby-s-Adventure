@@ -28,7 +28,7 @@ public class HealthCollectible : MonoBehaviour
                 controller.ChangeHealth(10);
             }
             Destroy(gameObject);
-            controller.PlaySound(collectedClip);
+            SoundManager.instance.PlaySingle(collectedClip);
             scoreText.text = $"{ GameManager.instance.score += 10}";
 
         }

@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public int maxHealth = 5;
-    public int currentAmmo = 10;
+    public int maxHealth = 100;
     public float iFrameTime = 2.0f;
     public GameObject projectilePrefab;
     public ParticleSystem hitEffect;
     public AudioClip projectileClip;
     public AudioClip hitClip;
+    public AudioClip walkclip;
     public float restartLevelDelay = 1f;
 
     
@@ -34,33 +34,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public int ammo
-    {
-        get { return currentAmmo; }
-        set
-        {
-            if (currentAmmo < 0)
-            {
-                currentAmmo = 0;
-                Debug.LogError("Ammo cannot be negative!");
-            }
-        }
-    }
-
-    [SerializeField] float speed = 3.0f;
-    Rigidbody2D playerRb;
-    Vector2 position;
-    Vector2 lookDir = new Vector2(1, 0);
-    Animator animator;
-    bool isInvincible;
-    float iFrameTimer;
-    float horizontalMove;
-    float verticalMove;
-    AudioSource audioSource;
-    bool isMoving = false;
-    int currentHealth;
-    bool energyJustConsumed;
-    Text ammoText;
+    [SerializeField] private float speed = 3.0f;
+    private Rigidbody2D playerRb;
+    private Vector2 position;
+    private Vector2 lookDir = new Vector2(1, 0);
+    private Animator animator;
+    private bool isInvincible;
+    private float iFrameTimer;
+    private float horizontalMove;
+    private float verticalMove;
+    private int currentHealth = 100;
+    private Text ammoText;
+    private int currentAmmo = 10;
 
 
     // Start is called before the first frame update
@@ -68,10 +53,17 @@ public class PlayerController : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
         ammoText = GameObject.Find("Ammo Text").GetComponent<Text>();
-        currentHealth = maxHealth;
-        
+        ammoText.text = $"{currentAmmo}";
+        currentHealth = GameManager.instance.playerHealth;
+        currentAmmo = GameManager.instance.playerAmmo;
+    }
+
+
+    private void OnDisable()
+    {
+        GameManager.instance.playerAmmo = currentAmmo;
+        GameManager.instance.playerHealth = currentHealth;
     }
 
     void Update()
@@ -87,6 +79,7 @@ public class PlayerController : MonoBehaviour
         }
 
         CheckNPC();
+        UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
     }
 
     // Update is called once per frame
@@ -98,15 +91,6 @@ public class PlayerController : MonoBehaviour
     public void playerMovement()
     {
         Vector2 move = new Vector2(horizontalMove, verticalMove);
-
-        if (horizontalMove != 0 || verticalMove != 0)
-        {
-            isMoving = true;
-        }
-        else
-        {
-            isMoving = false;
-        }
 
         if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
         {
@@ -132,7 +116,7 @@ public class PlayerController : MonoBehaviour
             iFrameTimer = iFrameTime;
             animator.SetTrigger("Hit");
             hitEffect.Play();
-            PlaySound(hitClip);
+            SoundManager.instance.PlaySingle(hitClip);
         }
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
@@ -166,7 +150,7 @@ public class PlayerController : MonoBehaviour
             Projectile projectile = projectileObject.GetComponent<Projectile>();
             projectile.Launch(lookDir, 300);
             animator.SetTrigger("Launch");
-            PlaySound(projectileClip);
+            SoundManager.instance.PlaySingle(projectileClip);
 
             ChangeAmmo(-1);
         }
@@ -188,17 +172,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void PlaySound(AudioClip clip)
-    {
-        audioSource.PlayOneShot(clip);
-    }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Exit")
         {
             Invoke("Restart", restartLevelDelay);
+            enabled = false;
         }
     }
 

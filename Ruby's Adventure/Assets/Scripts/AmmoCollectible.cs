@@ -14,7 +14,7 @@ public class AmmoCollectible : MonoBehaviour
         {
             controller.ChangeAmmo(1);
             Destroy(gameObject);
-            controller.PlaySound(collectedClip);
+            SoundManager.instance.PlaySingle(collectedClip);
         }
     }
 }

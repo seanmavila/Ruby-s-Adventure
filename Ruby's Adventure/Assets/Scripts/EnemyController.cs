@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     public ParticleSystem smokeEffect;
     public ParticleSystem hitEffect;
     private Transform player;
+    public AudioClip fixClip;
 
     [SerializeField] float speed;
     Rigidbody2D enemyRb;
@@ -118,5 +119,8 @@ public class EnemyController : MonoBehaviour
         smokeEffect.Stop();
         hitEffect.Play();
         scoreText.text = $"{ GameManager.instance.score += 25}";
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.enabled = false;
+        SoundManager.instance.PlaySingle(fixClip);
     }
 }

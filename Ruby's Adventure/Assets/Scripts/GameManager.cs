@@ -10,8 +10,11 @@ public class GameManager : MonoBehaviour
     public int score = 0;
     public static GameManager instance = null;
     public BoardManager boardScript;
+    public int playerHealth = 100;
+    public int playerAmmo = 10;
+    public int playerScore;
 
-    private int level = 100;
+    private int level = 1;
     private List<EnemyController> enemies;
     private bool doingSetup;
 
