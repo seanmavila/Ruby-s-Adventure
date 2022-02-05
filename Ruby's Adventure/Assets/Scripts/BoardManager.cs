@@ -46,9 +46,12 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    void BoardSetup()
+    void BoardSetup(int level)
     {
         boardHolder = new GameObject("Board").transform;
+
+        columns += level / 2;
+        rows += level / 2;
 
         for (int x = -1; x < columns + 1; x++)
         {
@@ -89,11 +92,11 @@ public class BoardManager : MonoBehaviour
 
     public void SetupScene(int level)
     {
-        BoardSetup();
+        BoardSetup(level);
         InitializeList();
-        LayoutObjectAtRandom(obstacleTiles, obstacleCount.minimum, obstacleCount.maximum);
-        LayoutObjectAtRandom(foodTiles, foodCount.minimum, foodCount.maximum);
-        int enemyCount = (int)Mathf.Log(level, 2f);
+        LayoutObjectAtRandom(obstacleTiles, obstacleCount.minimum + 3 * level, obstacleCount.maximum + 3 * level);
+        LayoutObjectAtRandom(foodTiles, foodCount.minimum + 3 * level, foodCount.maximum + 3 * level);
+        int enemyCount = level;
         LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
         Instantiate(exit, new Vector3(columns - 1, rows - 1, 0f), Quaternion.identity);
     }

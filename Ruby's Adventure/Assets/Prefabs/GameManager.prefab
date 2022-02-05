@@ -81,6 +81,7 @@ MonoBehaviour:
   - {fileID: 3569290368439929692, guid: 805cc736d452b9544b420662844d96a8, type: 3}
   - {fileID: 3801438021458743187, guid: 695ce025c6dcc9c46bbeb7c0f84135bf, type: 3}
   - {fileID: 5347685064108447508, guid: dd1c2a0557caaba4a8ac6ef5f85c96c7, type: 3}
+  - {fileID: 5242497848552809836, guid: 2d2369a7cc0d89a40855976b1af11507, type: 3}
   foodTiles:
   - {fileID: 8629149081388113634, guid: 077464664bab9704ea290a3e95176c32, type: 3}
   enemyTiles:

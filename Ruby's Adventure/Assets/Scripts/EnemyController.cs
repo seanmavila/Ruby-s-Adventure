@@ -63,14 +63,15 @@ public class EnemyController : MonoBehaviour
     {
         Vector2 position = enemyRb.position;
 
-        if (Vector2.Distance(transform.position, player.position) <= aggroRange && isAggro == false)
+        if ((Vector2.Distance(transform.position, player.position) <= aggroRange && isAggro == false) || isAggro)
         {
             isAggro = true;
             enemyRb.MovePosition((Vector2)transform.position + (dir * speed * Time.deltaTime));
-        }
-        else if(isAggro == true)
-        {
-            enemyRb.MovePosition((Vector2)transform.position + (dir * speed * Time.deltaTime));
+
+            animator.SetFloat("moveX", direction);
+            animator.SetFloat("moveY", 0);
+ 
+
         }
         else
         {
@@ -92,13 +93,18 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.name);
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
 
         if (player != null)
         {
             player.ChangeHealth(-100);
         }
+        else
+        {
+            vertical = !vertical;
+        }
+
+        
     }
     
     public void Fix()

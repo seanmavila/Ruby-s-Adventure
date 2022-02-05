@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip hitClip;
     public float restartLevelDelay = 1f;
 
-    int currentHealth;
+    
     public int health
     {
         get { return currentHealth; }
@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
     float verticalMove;
     AudioSource audioSource;
     bool isMoving = false;
+    int currentHealth;
+    bool energyJustConsumed;
 
     // Start is called before the first frame update
     void Start()
@@ -164,18 +166,18 @@ public class PlayerController : MonoBehaviour
 
     public void ConsumeEnergy()
     {
-        if (isMoving)
+        if (isMoving && energyJustConsumed)
         {
-            StartCoroutine(EnergyTime());
+            energyJustConsumed = !energyJustConsumed;
             int amount = -1;
             currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
             UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
-        }
-    }
 
-    IEnumerator EnergyTime()
-    {
-        yield return new WaitForSeconds(1);
+        }
+        else
+        {
+            energyJustConsumed = !energyJustConsumed;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

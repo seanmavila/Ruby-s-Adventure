@@ -777,6 +777,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5199831263939168689, guid: 10b25b4f893970249b5314c5ad191f27, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5199831263939168689, guid: 10b25b4f893970249b5314c5ad191f27, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5199831263939168689, guid: 10b25b4f893970249b5314c5ad191f27, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -832213881
+      objectReference: {fileID: 0}
+    - target: {fileID: 7330419615381677224, guid: 10b25b4f893970249b5314c5ad191f27, type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7330419615381677224, guid: 10b25b4f893970249b5314c5ad191f27, type: 3}
+      propertyPath: maxHealth
+      value: 2500
+      objectReference: {fileID: 0}
     - target: {fileID: 7330419615381677225, guid: 10b25b4f893970249b5314c5ad191f27, type: 3}
       propertyPath: m_RootOrder
       value: 1

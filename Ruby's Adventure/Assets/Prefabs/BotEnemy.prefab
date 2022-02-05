@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -832213881
   m_SortingLayer: 3
-  m_SortingOrder: -1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4c75bf97631f1b742bf10b66a66bd22b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -275,21 +275,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1234304605714149638}
     m_Modifications:
+    - target: {fileID: 2504046193434117221, guid: 29672d92a9f2c4e45820e7d99731c146, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504046193434117221, guid: 29672d92a9f2c4e45820e7d99731c146, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504046193434117221, guid: 29672d92a9f2c4e45820e7d99731c146, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -832213881
+      objectReference: {fileID: 0}
     - target: {fileID: 2504046193434117223, guid: 29672d92a9f2c4e45820e7d99731c146, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2504046193434117223, guid: 29672d92a9f2c4e45820e7d99731c146, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.006
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 2504046193434117223, guid: 29672d92a9f2c4e45820e7d99731c146, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.513
+      value: 0.92
       objectReference: {fileID: 0}
     - target: {fileID: 2504046193434117223, guid: 29672d92a9f2c4e45820e7d99731c146, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2504046193434117223, guid: 29672d92a9f2c4e45820e7d99731c146, type: 3}
       propertyPath: m_LocalRotation.w
@@ -353,6 +365,26 @@ PrefabInstance:
     - target: {fileID: 7212527959113931696, guid: d21493696bb9e674f98191ee63e9524d, type: 3}
       propertyPath: moveWithTransform
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212527959113931696, guid: d21493696bb9e674f98191ee63e9524d, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212527959113931696, guid: d21493696bb9e674f98191ee63e9524d, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212527959113931697, guid: d21493696bb9e674f98191ee63e9524d, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212527959113931697, guid: d21493696bb9e674f98191ee63e9524d, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212527959113931697, guid: d21493696bb9e674f98191ee63e9524d, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -832213881
       objectReference: {fileID: 0}
     - target: {fileID: 7212527959113931699, guid: d21493696bb9e674f98191ee63e9524d, type: 3}
       propertyPath: m_RootOrder

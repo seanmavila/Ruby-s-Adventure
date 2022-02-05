@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
     public BoardManager boardScript;
 
-    private int level = 3;
+    private int level = 1;
     private List<EnemyController> enemies;
     private bool doingSetup;
 
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
         InitGame();
     }
 
-    private void OnLevelWasLoaded(int inex)
+    private void OnLevelWasLoaded(int index)
     {
         level++;
         InitGame();
