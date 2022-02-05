@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
     public float changeTime = 3.0f;
     public ParticleSystem smokeEffect;
     public ParticleSystem hitEffect;
+    private Transform player;
 
     [SerializeField] float speed;
     Rigidbody2D enemyRb;
@@ -15,12 +16,16 @@ public class EnemyController : MonoBehaviour
     float timer;
     int direction = 1;
     bool broken = true;
+    int aggroRange = 2;
+    bool isAggro = false;
+    private Vector2 movement;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyRb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         timer = changeTime;
     }
 
@@ -38,6 +43,10 @@ public class EnemyController : MonoBehaviour
             direction = -direction;
             timer = changeTime;
         }
+        Vector3 dir = player.position - transform.position;
+
+        dir.Normalize();
+        movement = dir;
 
     }
 
@@ -47,27 +56,38 @@ public class EnemyController : MonoBehaviour
         {
             return;
         }
-        enemyMove();
+        enemyMove(movement);
     }
 
-    public void enemyMove()
+    public void enemyMove(Vector2 dir)
     {
         Vector2 position = enemyRb.position;
-        
 
-        if (vertical)
+        if (Vector2.Distance(transform.position, player.position) <= aggroRange && isAggro == false)
         {
-            position.y = position.y +  Time.deltaTime * speed * direction;
-            animator.SetFloat("moveX", 0);
-            animator.SetFloat("moveY", direction);
+            isAggro = true;
+            enemyRb.MovePosition((Vector2)transform.position + (dir * speed * Time.deltaTime));
+        }
+        else if(isAggro == true)
+        {
+            enemyRb.MovePosition((Vector2)transform.position + (dir * speed * Time.deltaTime));
         }
         else
         {
-            position.x = position.x + Time.deltaTime * speed * direction;
-            animator.SetFloat("moveX", direction);
-            animator.SetFloat("moveY", 0);
+            if (vertical)
+            {
+                position.y = position.y + Time.deltaTime * speed * direction;
+                animator.SetFloat("moveX", 0);
+                animator.SetFloat("moveY", direction);
+            }
+            else
+            {
+                position.x = position.x + Time.deltaTime * speed * direction;
+                animator.SetFloat("moveX", direction);
+                animator.SetFloat("moveY", 0);
+            }
+            enemyRb.MovePosition(position);
         }
-        enemyRb.MovePosition(position);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

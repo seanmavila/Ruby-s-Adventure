@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3998630124035873940}
   - component: {fileID: 3998630124035873941}
   - component: {fileID: 3998630124035873962}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RubyHitEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

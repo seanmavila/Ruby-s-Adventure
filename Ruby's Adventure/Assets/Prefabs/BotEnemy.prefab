@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 600948387458576109}
   - component: {fileID: 3294549979607977762}
   - component: {fileID: 2660864154128978359}
-  m_Layer: 13
+  m_Layer: 7
   m_Name: BotEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2504046193434117242, guid: 29672d92a9f2c4e45820e7d99731c146, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29672d92a9f2c4e45820e7d99731c146, type: 3}
@@ -404,7 +404,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7212527959113931710, guid: d21493696bb9e674f98191ee63e9524d, type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d21493696bb9e674f98191ee63e9524d, type: 3}
