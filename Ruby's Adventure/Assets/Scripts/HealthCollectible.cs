@@ -8,13 +8,6 @@ public class HealthCollectible : MonoBehaviour
 
     public AudioClip collectedClip;
 
-    private Text scoreText;
-
-    private void Start()
-    {
-        scoreText = GameObject.Find("Score Text").GetComponent<Text>();
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         PlayerController controller = collision.GetComponent<PlayerController>();
@@ -29,7 +22,7 @@ public class HealthCollectible : MonoBehaviour
             }
             Destroy(gameObject);
             SoundManager.instance.PlaySingle(collectedClip);
-            scoreText.text = $"{ GameManager.instance.score += 10}";
+            controller.ChangeScore(5);
 
         }
     }

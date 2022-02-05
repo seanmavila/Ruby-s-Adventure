@@ -50,6 +50,8 @@ MonoBehaviour:
   playerHealth: 100
   playerAmmo: 10
   playerScore: 0
+  level: 0
+  gameOver: 0
 --- !u!114 &4188891953574997432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,3 +96,5 @@ MonoBehaviour:
   waterTiles:
   - {fileID: 8360836705579692026, guid: 1315d680da52c364198d6e7d0b35e371, type: 3}
   - {fileID: 5781351419255619840, guid: 786f139b104d70b4e9719494ffbea60a, type: 3}
+  npcTiles:
+  - {fileID: 2876500349141043705, guid: a586617e7a5646a4aae043a3426c51bd, type: 3}

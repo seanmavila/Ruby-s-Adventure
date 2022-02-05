@@ -35,4 +35,9 @@ public class SoundManager : MonoBehaviour
         efxSource.clip = clip;
         efxSource.Play();
     }
+
+    public void KillSound()
+    {
+        Destroy(gameObject);
+    }
 }

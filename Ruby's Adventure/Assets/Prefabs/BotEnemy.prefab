@@ -153,7 +153,7 @@ MonoBehaviour:
   smokeEffect: {fileID: 1436908066017677073}
   hitEffect: {fileID: 6428363208203468713}
   fixClip: {fileID: 8300000, guid: e7fa1971a86d60945bb64585c0ac14d5, type: 3}
-  speed: 1
+  speed: 1.5
 --- !u!95 &3294549979607977762
 Animator:
   serializedVersion: 3

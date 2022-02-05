@@ -13,8 +13,9 @@ public class GameManager : MonoBehaviour
     public int playerHealth = 100;
     public int playerAmmo = 10;
     public int playerScore;
+    public int level;
+    public bool gameOver;
 
-    private int level = 1;
     private List<EnemyController> enemies;
     private bool doingSetup;
 
@@ -32,13 +33,12 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         enemies = new List<EnemyController>();
         boardScript = GetComponent<BoardManager>();
-        InitGame();
     }
 
     private void OnLevelWasLoaded(int index)
     {
-        level++;
         InitGame();
+        level++;
     }
 
     void InitGame()
@@ -46,6 +46,14 @@ public class GameManager : MonoBehaviour
         doingSetup = true;
         enemies.Clear();
         boardScript.SetupScene(level);
+    }
+
+    public void GameOver()
+    {
+        gameOver = true;
+        SoundManager.instance.KillSound();
+        Destroy(gameObject);
+        SceneManager.LoadScene(3);
     }
 
 }

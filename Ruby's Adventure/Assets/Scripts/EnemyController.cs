@@ -21,7 +21,6 @@ public class EnemyController : MonoBehaviour
     int aggroRange = 3;
     bool isAggro = false;
     private Vector2 movement;
-    private Text scoreText;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +29,6 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         timer = changeTime;
-        scoreText = GameObject.Find("Score Text").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -113,12 +111,13 @@ public class EnemyController : MonoBehaviour
     
     public void Fix()
     {
+        PlayerController player = FindObjectOfType<PlayerController>();
         broken = false;
         enemyRb.simulated = false;
         animator.SetTrigger("Fixed");
         smokeEffect.Stop();
         hitEffect.Play();
-        scoreText.text = $"{ GameManager.instance.score += 25}";
+        player.ChangeScore(25);
         AudioSource audio = GetComponent<AudioSource>();
         audio.enabled = false;
         SoundManager.instance.PlaySingle(fixClip);

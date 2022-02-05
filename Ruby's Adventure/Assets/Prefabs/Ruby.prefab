@@ -100,14 +100,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71aeab104b97fa34e8648fa22639a9bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2000
+  maxHealth: 100
   iFrameTime: 2
   projectilePrefab: {fileID: 4534137012469586925, guid: d5bee5c25b5e46f4e9f4c4d9b0174e77, type: 3}
   hitEffect: {fileID: 5199831263939168654}
   projectileClip: {fileID: 8300000, guid: b2edfd40873655249ba0e01a5cf705be, type: 3}
   hitClip: {fileID: 8300000, guid: 9b1bb1f450b7d444fa4a8019d13519a7, type: 3}
+  walkclip: {fileID: 8300000, guid: a20c77ecd5de9eb4a98731b45ad84c3e, type: 3}
   restartLevelDelay: 1
-  speed: 5
+  speed: 2
 --- !u!50 &8151625016945701845
 Rigidbody2D:
   serializedVersion: 4
@@ -336,6 +337,14 @@ PrefabInstance:
     - target: {fileID: 3998630124035873941, guid: ae2404111ea49b749858fc6dbfeb203a, type: 3}
       propertyPath: InitialModule.startSize.minScalar
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3998630124035873962, guid: ae2404111ea49b749858fc6dbfeb203a, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3998630124035873962, guid: ae2404111ea49b749858fc6dbfeb203a, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -832213881
       objectReference: {fileID: 0}
     - target: {fileID: 3998630124035873963, guid: ae2404111ea49b749858fc6dbfeb203a, type: 3}
       propertyPath: m_Name

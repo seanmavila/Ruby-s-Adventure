@@ -6,11 +6,13 @@ public class NonPlayerCharacter : MonoBehaviour
 {
     public float displayTime = 4.0f;
     public GameObject dialogBox;
+    public GameObject dialogBox2;
     float timerDisplay;
 
     private void Start()
     {
         dialogBox.SetActive(false);
+        dialogBox2.SetActive(false);
         timerDisplay = -1.0f;
     }
     private void Update()
@@ -25,14 +27,26 @@ public class NonPlayerCharacter : MonoBehaviour
             timerDisplay -= Time.deltaTime;
             if (timerDisplay < 0)
             {
+                
                 dialogBox.SetActive(false);
+                dialogBox2.SetActive(false);
             }
         }
     }
 
-    public void DisplayDialog()
+    public void DisplayDialog(int dialogue)
     {
         timerDisplay = displayTime;
-        dialogBox.SetActive(true);
+
+        switch (dialogue)
+        {
+            case 1:
+                dialogBox.SetActive(true);
+                break;
+            case 2:
+                dialogBox2.SetActive(true);
+                break;
+        }   
+        
     }
 }

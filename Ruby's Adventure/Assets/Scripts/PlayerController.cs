@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip hitClip;
     public AudioClip walkclip;
     public float restartLevelDelay = 1f;
+    public GameObject dialogueContainer;
 
     
     public int health
@@ -45,7 +46,10 @@ public class PlayerController : MonoBehaviour
     private float verticalMove;
     private int currentHealth = 100;
     private Text ammoText;
+    private Text scoreText;
     private int currentAmmo = 10;
+    private int currentScore;
+    
 
 
     // Start is called before the first frame update
@@ -54,9 +58,12 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         ammoText = GameObject.Find("Ammo Text").GetComponent<Text>();
-        ammoText.text = $"{currentAmmo}";
+        scoreText = GameObject.Find("Score Text").GetComponent<Text>();
         currentHealth = GameManager.instance.playerHealth;
         currentAmmo = GameManager.instance.playerAmmo;
+        currentScore = GameManager.instance.score;
+        ammoText.text = $"{currentAmmo}";
+        scoreText.text = $"{currentScore}";
     }
 
 
@@ -64,6 +71,7 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.instance.playerAmmo = currentAmmo;
         GameManager.instance.playerHealth = currentHealth;
+        GameManager.instance.score = currentScore;
     }
 
     void Update()
@@ -73,13 +81,17 @@ public class PlayerController : MonoBehaviour
 
         iFrameCheck();
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Launch();
         }
 
         CheckNPC();
         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
+        if (currentHealth == 0)
+        {
+            GameManager.instance.GameOver();
+        }
     }
 
     // Update is called once per frame
@@ -120,12 +132,20 @@ public class PlayerController : MonoBehaviour
         }
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
+
+        
     }
 
     public void ChangeAmmo(int amount)
     {
         currentAmmo += amount;
         ammoText.text = $"{currentAmmo}";
+    }
+
+    public void ChangeScore(int amount)
+    {
+        currentScore += amount;
+        scoreText.text = $"{currentScore}";
     }
 
     public void iFrameCheck()
@@ -166,10 +186,19 @@ public class PlayerController : MonoBehaviour
                 NonPlayerCharacter character = hit.collider.GetComponent<NonPlayerCharacter>();
                 if (character != null)
                 {
-                    character.DisplayDialog();
+                    character.DisplayDialog(1);
+                    dialogueContainer.SetActive(false);
+                    StartCoroutine(dialogueTimer(character));
+                    
                 }
             }
         }
+    }
+
+    IEnumerator dialogueTimer(NonPlayerCharacter character)
+    {
+        yield return new WaitForSeconds(4);
+        character.DisplayDialog(2);
     }
 
 
@@ -180,10 +209,16 @@ public class PlayerController : MonoBehaviour
             Invoke("Restart", restartLevelDelay);
             enabled = false;
         }
+        else if (collision.tag == "Dialogue")
+        {
+            dialogueContainer.SetActive(true);
+            collision.enabled = false;
+            
+        }
     }
 
     public void Restart()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2);
     }
 }
